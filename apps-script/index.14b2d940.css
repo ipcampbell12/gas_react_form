@@ -13365,4 +13365,11 @@ p {
   width: 50%;
 }
 
+.select-box {
+  color: gray;
+  border-color: #000;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 /*# sourceMappingURL=index.14b2d940.css.map */

@@ -1,59 +1,28 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Form from 'react-bootstrap/Form';
 //import Row from 'react-bootstrap/Row';
 //import { TextField } from '@mui/material';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
+import MyTextInput from './inputs/TextInput';
+import MySelect from './inputs/SelectInput';
 import { GASClient } from 'gas-client';
 const { serverFunctions } = new GASClient();
 
 
-export const MyTextInput = ({ label, ...props }) => {
-    // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-    // which we can spread on <input>. We can use field meta to show an error
-    // message if the field is invalid and it has been touched (i.e. visited)
-    const [field, meta] = useField(props);
-    return (
-        <div className='margin-space'>
-
-            <label htmlFor={props.id || props.name} className="form-label">{label}</label>
-            <input className="text-input form-control input-width" {...field} {...props} />
-            {meta.touched && meta.error ? (
-                <div className="val-error">{meta.error}</div>
-            ) : null}
-
-        </div>
-    );
-};
-
-export const MySelect = ({ label, ...props }) => {
-    const [field, meta] = useField(props);
-    return (
-        <div className='margin-space'>
-            <label htmlFor={props.id || props.name}>{label}</label>
-            <select {...field} {...props} className="form-select form-select-lg mb-3" />
-            {meta.touched && meta.error ? (
-                <div className="val-error">{meta.error}</div>
-            ) : null}
-        </div>
-    );
-};
-
-
 //actual component
-export function PracticeForm(props) {
-    const allowablePets = ['Hamster', "Bunny", "Dolphin"]
+export default function StudentForm(props) {
 
-    Yup.addMethod(Yup.string, 'validPet', function () {
-        return this.test('valid-pet', 'Your favorite pet must be a Hamster, a Bunny or a Dolphin', function (value) {
-            return !value || allowablePets.includes(value);
-        });
-    });
+
+    // Yup.addMethod(Yup.string, 'validPet', function () {
+    //     return this.test('valid-pet', 'Your favorite pet must be a Hamster, a Bunny or a Dolphin', function (value) {
+    //         return !value || allowablePets.includes(value);
+    //     });
+    // });
     return (
         <div>
             <Formik
-                initialValues={{ firstName: '', lastName: '', favoritePet: '', regOption: '' }}
+                initialValues={{ firstName: '', lastName: '', grade: '', regOption: '' }}
                 validationSchema={Yup.object({
                     firstName: Yup.string()
                         .max(15, 'Must be 15 characters or less')
@@ -65,12 +34,12 @@ export function PracticeForm(props) {
                         .matches(/^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/g,
                             'Name can only contain letters.')
                         .required('Required'),
-                    favoritePet: Yup.string().validPet().required('Required'),
+                    grade: Yup.string().required('Required'),
                     regOption: Yup.string().required('Required')
                 })}
                 onSubmit={(values, actions) => {
                     serverFunctions
-                        .addDataToSheet(values.firstName, values.lastName, values.favoritePet, values.regOption)
+                        .addDataToSheet(values.firstName, values.lastName, values.grade, values.regOption)
                         .then(actions.resetForm())
                         .catch((err) => console.log(err))
                 }}>
@@ -81,6 +50,7 @@ export function PracticeForm(props) {
                         name="firstName"
                         type="text"
                         placeholder="Jane"
+                        className="mb-2"
                     />
 
                     <MyTextInput
@@ -88,15 +58,26 @@ export function PracticeForm(props) {
                         name="lastName"
                         type="text"
                         placeholder="Doe"
+                        className="mb-2"
                     />
 
-                    <MyTextInput
-                        label="Favorite Pet"
-                        name="favoritePet"
-                        type="text"
-                        placeholder="Shark"
-                    />
 
+                    <MySelect label="Grade" name="grade" className="m1-3 mb-3 form-select">
+                        <option value="">Select student's current grade</option>
+                        <option value="Kindergarten">Kindergarten</option>
+                        <option value="1">1st</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                    </MySelect>
 
 
                     <MySelect label="Registration Options" name="regOption" className="m1-3">
@@ -106,10 +87,6 @@ export function PracticeForm(props) {
                         <option value="2024-2025 ...1st-12th Grade">2024-2025 ...1st-12th Grade</option>
                     </MySelect>
 
-
-                    <button type="submit" className="btn btn-primary margin-space" >
-                        Submit
-                    </button>
                 </Form>
             </Formik>
         </div>

@@ -25,11 +25,11 @@ function getSheet(name = "Form Responses") {
 }
 
 
-function addDataToSheet(firstName, lastName, favoritePet, regOption) {
-    Logger.log([firstName, lastName, favoritePet, regOption])
+function addDataToSheet(firstName, lastName, grade, regOption) {
+    Logger.log([firstName, lastName, grade, regOption])
     const sheet = getSheet("Form Responses");
     const range = sheet.getRange(sheet.getLastRow() + 1, 1, 1, 4)
-    range.setValues([[firstName, lastName, favoritePet, regOption]])
+    range.setValues([[firstName, lastName, grade, regOption]])
 }
 
 function tryIt() {

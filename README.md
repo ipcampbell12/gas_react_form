@@ -25,6 +25,7 @@ npm install -D @google/clasp
 ```
 
 5) You will usse "npm run" for all the clasp commands (make sure you do npm run glogin at some point too)
+> IF YOU ARE WORKING ON THE PROJECT AND NOTICE THAT LOCAL CHANGES ARE NOT BEING PUSHED, TRY DOING CLASP LOGIN AGAIN!!!
 6) Run npm run gcreate to create a new project 
 7) Select project type (i.e. scripts, docs, webapp, standlone); it's fine to just choose standalone.
 8) Install auto complete for script functions (Make sure you have it set to devDependency)
