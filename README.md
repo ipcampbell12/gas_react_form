@@ -88,7 +88,7 @@ export function App() {
 
 ![alt text](/screenshots/image.png)
 
-21) Add this code below your div with id of "app" in the index.js file to import your react code: 
+21) Add this code below your div with id of "app" in the index.html file to import your react code: 
 
 ```
  <script type="module">
